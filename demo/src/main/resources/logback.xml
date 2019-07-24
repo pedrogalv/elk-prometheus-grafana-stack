@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
 
-
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <!-- By default, encoders are assigned the type ch.qos.logback.classic.encoder.PatternLayoutEncoder -->
         <encoder>
@@ -64,11 +63,44 @@
         </encoder>
     </appender>
 
+    <!-- <appender name="FLUENCY_SYNC" class="ch.qos.logback.more.appenders.FluencyLogbackAppender">
+        <tag>debug</tag>
+
+        <remoteHost>localhost</remoteHost>
+        <port>24224</port>
+
+        <additionalField>
+            <key>foo</key>
+            <value>bar</value>
+        </additionalField>
+        <additionalField>
+            <key>foo2</key>
+            <value>bar2</value>
+        </additionalField>
+
+        <ackResponseMode>true</ackResponseMode>
+        <fileBackupDir>/tmp</fileBackupDir>
+        <bufferChunkInitialSize>2097152</bufferChunkInitialSize>
+        <bufferChunkRetentionSize>16777216</bufferChunkRetentionSize>
+        <maxBufferSize>268435456</maxBufferSize>
+        <waitUntilBufferFlushed>30</waitUntilBufferFlushed>
+        <waitUntilFlusherTerminated>40</waitUntilFlusherTerminated>
+        <flushIntervalMillis>200</flushIntervalMillis>
+        <senderMaxRetryCount>12</senderMaxRetryCount>
+        <useEventTime>true</useEventTime>
+        <sslEnabled>false</sslEnabled>
+        <flattenMapMarker>false</flattenMapMarker>
+
+        <encoder>
+            <pattern><![CDATA[%date{HH:mm:ss.SSS} [%thread] %-5level %logger{15}#%line %msg]]></pattern>
+        </encoder>
+    </appender> -->
+
     <root level="INFO">
         <appender-ref ref="STDOUT"/>
         <appender-ref ref="STASH"/>
         <appender-ref ref="GRAYLOG_UDP_APPENDER"/>
+        <!-- <appender-ref ref="FLUENCY_SYNC" /> -->
     </root>
-
 
 </configuration>

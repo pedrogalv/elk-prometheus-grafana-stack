@@ -98,6 +98,16 @@ services:
       - elasticsearch
       - mongodb
 
+  # fluentd:
+  #   build: fluentd/
+  #   ports:
+  #     - "24224:24224"
+  #     - "24224:24224/udp"
+  #   links:
+  #     - elasticsearch
+  #   depends_on:
+  #     - elasticsearch
+
 volumes:
   grafana-storage:
   prometheus-data:

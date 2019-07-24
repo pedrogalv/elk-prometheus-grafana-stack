@@ -11,6 +11,7 @@ sourceCompatibility = '1.8'
 
 repositories {
     mavenCentral()
+    maven { url 'http://sndyuk.github.com/maven' }
 }
 
 ext {
@@ -34,6 +35,12 @@ dependencies {
     implementation 'ch.qos.logback:logback-classic:1.2.3'
     implementation 'me.moocar:logback-gelf:0.3'
     compile group: 'org.springframework', name: 'spring-aspects'
+
+    // Fluentd
+    implementation 'org.fluentd:fluent-logger:0.3.2'
+    implementation 'com.sndyuk:logback-more-appenders:1.5.6'
+    implementation 'org.komamitsu:fluency-core:2.2.1'
+    implementation 'org.komamitsu:fluency-fluentd:2.2.1'
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
