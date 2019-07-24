@@ -4,6 +4,10 @@ build/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**
 !**/src/test/**
+bin/
+mongodb-data/
+grafana-storage/
+graylog-journal/
 
 ### STS ###
 .apt_generated
@@ -29,4 +33,5 @@ out/
 /.nb-gradle/
 
 ### VS Code ###
-.vscode/
+.vscode/settings.json
+

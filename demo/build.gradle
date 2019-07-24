@@ -23,12 +23,16 @@ dependencies {
     //Actuator
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
 
-    //Sleuth Zipkin
+    //Sleuth Zipkin - add trace to the log message
     implementation 'org.springframework.cloud:spring-cloud-sleuth-zipkin'
+
+    //Sleuth Zipkin - send zipkin traces to localhost:9411 zipkin-server (see application.yml)
+    implementation 'org.springframework.cloud:spring-cloud-starter-sleuth'
+    implementation 'org.springframework.cloud:spring-cloud-starter-zipkin'
 
     implementation 'net.logstash.logback:logstash-logback-encoder:4.9'
     implementation 'ch.qos.logback:logback-classic:1.2.3'
-    implementation 'ch.qos.logback:logback-core:1.2.3'
+    implementation 'me.moocar:logback-gelf:0.3'
     compile group: 'org.springframework', name: 'spring-aspects'
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
@@ -39,7 +43,6 @@ dependencies {
 
     //Micrometer
     implementation 'io.micrometer:micrometer-registry-prometheus'
-
 }
 
 dependencyManagement {

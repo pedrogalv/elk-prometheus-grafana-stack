@@ -32,19 +32,48 @@
       "type": "row"
     },
     {
+      "alert": {
+        "conditions": [
+          {
+            "evaluator": {
+              "params": [11],
+              "type": "gt"
+            },
+            "operator": {
+              "type": "and"
+            },
+            "query": {
+              "params": ["C", "24h", "now"]
+            },
+            "reducer": {
+              "params": [],
+              "type": "count"
+            },
+            "type": "query"
+          }
+        ],
+        "executionErrorState": "alerting",
+        "for": "5m",
+        "frequency": "1m",
+        "handler": 1,
+        "name": "Log count alert",
+        "noDataState": "no_data",
+        "notifications": []
+      },
       "aliasColors": {},
       "bars": false,
       "dashLength": 10,
       "dashes": false,
       "datasource": "Elasticsearch",
-      "fill": 7,
+      "fill": 1,
       "gridPos": {
-        "h": 8,
-        "w": 12,
+        "h": 10,
+        "w": 11,
         "x": 0,
         "y": 1
       },
       "id": 10,
+      "interval": "",
       "legend": {
         "avg": false,
         "current": false,
@@ -60,15 +89,29 @@
       "nullPointMode": "null",
       "options": {},
       "percentage": false,
-      "pointradius": 2,
-      "points": false,
+      "pointradius": 1,
+      "points": true,
       "renderer": "flot",
-      "seriesOverrides": [],
+      "seriesOverrides": [
+        {
+          "alias": "INFO",
+          "color": "#73BF69"
+        },
+        {
+          "alias": "WARN",
+          "color": "#FADE2A"
+        },
+        {
+          "alias": "ERROR",
+          "color": "#F2495C"
+        }
+      ],
       "spaceLength": 10,
       "stack": false,
       "steppedLine": false,
       "targets": [
         {
+          "alias": "INFO",
           "bucketAggs": [
             {
               "field": "@timestamp",
@@ -88,16 +131,165 @@
               "type": "count"
             }
           ],
-          "query": "message: 'call made'",
+          "query": "level: INFO",
           "refId": "A",
           "timeField": "@timestamp"
+        },
+        {
+          "alias": "WARN",
+          "bucketAggs": [
+            {
+              "field": "@timestamp",
+              "id": "2",
+              "settings": {
+                "interval": "auto",
+                "min_doc_count": 0,
+                "trimEdges": 0
+              },
+              "type": "date_histogram"
+            }
+          ],
+          "metrics": [
+            {
+              "field": "select field",
+              "id": "1",
+              "type": "count"
+            }
+          ],
+          "query": "level: WARN",
+          "refId": "B",
+          "timeField": "@timestamp"
+        },
+        {
+          "alias": "ERROR",
+          "bucketAggs": [
+            {
+              "field": "@timestamp",
+              "id": "2",
+              "settings": {
+                "interval": "auto",
+                "min_doc_count": 0,
+                "trimEdges": 0
+              },
+              "type": "date_histogram"
+            }
+          ],
+          "metrics": [
+            {
+              "field": "select field",
+              "id": "1",
+              "type": "count"
+            }
+          ],
+          "query": "level: ERROR",
+          "refId": "C",
+          "timeField": "@timestamp"
+        }
+      ],
+      "thresholds": [
+        {
+          "colorMode": "critical",
+          "fill": true,
+          "line": true,
+          "op": "gt",
+          "value": 11
+        }
+      ],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Log count",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": true,
+      "cacheTimeout": null,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "Prometheus",
+      "description": "",
+      "fill": 3,
+      "gridPos": {
+        "h": 10,
+        "w": 13,
+        "x": 11,
+        "y": 1
+      },
+      "id": 4,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "options": {},
+      "percentage": false,
+      "pluginVersion": "6.2.4",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "http_server_requests_seconds_max{job=\"spring-actuator\", uri=\"/info\"}",
+          "format": "time_series",
+          "hide": false,
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "req/s",
+          "refId": "A"
         }
       ],
       "thresholds": [],
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Panel Title",
+      "title": "Requests per seconde",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -140,7 +332,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 9
+        "y": 11
       },
       "id": 6,
       "panels": [],
@@ -187,7 +379,7 @@
         "h": 10,
         "w": 24,
         "x": 0,
-        "y": 10
+        "y": 12
       },
       "id": 2,
       "legend": {
@@ -270,95 +462,6 @@
         "align": false,
         "alignLevel": null
       }
-    },
-    {
-      "aliasColors": {},
-      "bars": false,
-      "cacheTimeout": null,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "Prometheus",
-      "description": "asdasdasdasdasdasdasdasd",
-      "fill": 1,
-      "gridPos": {
-        "h": 10,
-        "w": 13,
-        "x": 0,
-        "y": 20
-      },
-      "id": 4,
-      "legend": {
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "show": true,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 1,
-      "links": [],
-      "nullPointMode": "null",
-      "options": {},
-      "percentage": false,
-      "pluginVersion": "6.2.4",
-      "pointradius": 2,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "expr": "http_server_requests_seconds_max{job=\"spring-actuator\", uri=\"/info\"}",
-          "format": "time_series",
-          "hide": false,
-          "intervalFactor": 1,
-          "refId": "A"
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "Panel Title",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
     }
   ],
   "refresh": false,
@@ -369,8 +472,8 @@
     "list": []
   },
   "time": {
-    "from": "2019-06-24T21:13:33.826Z",
-    "to": "2019-06-24T22:55:43.490Z"
+    "from": "2019-07-23T04:43:43.330Z",
+    "to": "2019-07-24T04:43:43.330Z"
   },
   "timepicker": {
     "refresh_intervals": [
@@ -388,7 +491,7 @@
     "time_options": ["5m", "15m", "1h", "6h", "12h", "24h", "2d", "7d", "30d"]
   },
   "timezone": "",
-  "title": "New dashboard Copy",
+  "title": "ELK-Grafana-stack",
   "uid": "f-Sd4HVZk",
-  "version": 8
+  "version": 4
 }

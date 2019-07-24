@@ -35,9 +35,39 @@
         </encoder>
     </appender>
 
+    <appender name="GRAYLOG_UDP_APPENDER" class="me.moocar.logbackgelf.GelfUDPAppender">
+        <remoteHost>localhost</remoteHost>
+        <port>12202</port>
+        <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+            <providers>
+                <loggerName/>
+                <threadName/>
+                <message/>
+                <arguments/>
+                <version/>
+                <stackTrace/>
+                <pattern>
+                    <pattern>
+                        {
+                            "logLevel": "%level",
+                            "facility": "GELF",
+                            "source": "${HOSTNAME}",
+                            "app_env": "dev",
+                            "application_name": "elk-prometheus-grafana-graylog-stack",
+                            "trace": "%X{X-B3-TraceId:-}",
+                            "span": "%X{X-B3-SpanId:-}",
+                            "parent": "%X{X-B3-ParentSpanId:-}"
+                        }
+                    </pattern>
+                </pattern>
+            </providers>
+        </encoder>
+    </appender>
+
     <root level="INFO">
         <appender-ref ref="STDOUT"/>
         <appender-ref ref="STASH"/>
+        <appender-ref ref="GRAYLOG_UDP_APPENDER"/>
     </root>
 
 
