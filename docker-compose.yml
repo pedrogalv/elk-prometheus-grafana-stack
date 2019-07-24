@@ -70,7 +70,7 @@ services:
   graylog:
     image: graylog/graylog:3.0.2
     ports:
-      # Graylog web interface and REST API
+      # Graylog web interface and API
       - 9000:9000
       # Syslog TCP
       - 514:514
